@@ -459,7 +459,7 @@ def _write_petscii(
     if (mode_custom_font == True) :
         print(', font', end='')
         for i in range(0,0x0800) :
-            data.append(c64_memory[addr_bitmap+i])
+            data.append(c64_memory[addr_font+i])
     else :
         print(', skipping original font', end='')
     #screen
