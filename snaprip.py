@@ -55,6 +55,9 @@ value_d016 = 0
 value_d018 = 0
 value_d020 = 0
 value_d021 = 0
+value_d022 = 0
+value_d023 = 0
+value_d024 = 0
 value_dd00 = 0
 
 addr_vicbank = 0
@@ -82,6 +85,7 @@ value_sprite8_memory = 0
 
 mode_bitmap = False
 mode_multicolor = False
+mode_extended = False
 mode_custom_font = False
 
 
@@ -141,10 +145,10 @@ def _process() :
         $DD00 = %xxxxxx00 -> bank3: $c000-$ffff
     """
     
-    global value_d011, value_d015, value_d016, value_d018, value_d020, value_d021, value_dd00
+    global value_d011, value_d015, value_d016, value_d018, value_d020, value_d021, value_d022, value_d023, value_d024, value_dd00
     global value_sprite1_memory, value_sprite2_memory, value_sprite3_memory, value_sprite4_memory, value_sprite5_memory, value_sprite6_memory, value_sprite7_memory, value_sprite8_memory
     global value_sprite1_pointer, value_sprite2_pointer, value_sprite3_pointer, value_sprite4_pointer, value_sprite5_pointer, value_sprite6_pointer, value_sprite7_pointer, value_sprite8_pointer
-    global mode_bitmap, mode_custom_font, mode_multicolor
+    global mode_bitmap, mode_custom_font, mode_multicolor, mode_extended
     global addr_bitmap, addr_font, addr_screen, addr_vicbank
 
     value_d011 = c64_vic[0x0011]
@@ -153,6 +157,9 @@ def _process() :
     value_d018 = c64_vic[0x0018]
     value_d020 = c64_vic[0x0020]
     value_d021 = c64_vic[0x0021]
+    value_d022 = c64_vic[0x0022]
+    value_d023 = c64_vic[0x0023]
+    value_d024 = c64_vic[0x0024]
     value_dd00 = c64_cia2[0x0000]
 
     # shamelessly taken from vicegrab.c
@@ -168,6 +175,10 @@ def _process() :
     # check if multicolor mode (0xd016 bit 4)
     mode_multicolor = False
     if ( (value_d016 & 0b00010000) != 0 ) : mode_multicolor = True
+
+    # check if extended mode (0xd011 bit 6)
+    mode_extended = False
+    if ( (value_d011 & 0b01000000) != 0 ) : mode_extended = True
 
     # check if custom font (font not 0x1xxx or 0x9xxx)
     mode_custom_font = True
@@ -206,6 +217,9 @@ def _process() :
     print(' $d018 = $%04x %%%s' %(value_d018,format(value_d018,"08b")))
     print(' $d020 = $%04x' %(value_d020))
     print(' $d021 = $%04x' %(value_d021))
+    print(' $d022 = $%04x' %(value_d022))
+    print(' $d023 = $%04x' %(value_d023))
+    print(' $d024 = $%04x' %(value_d024))
     # print(' value_sprite1_pointer = %04x' %(value_sprite1_pointer))
     print(' value_sprite1_memory = $%04x' %(value_sprite1_memory))
     print(' value_sprite2_memory = $%04x' %(value_sprite2_memory))
@@ -475,6 +489,18 @@ def _write_petscii(
     data.append(value_d021)
     print(', border color', end='')
     data.append(value_d020)
+
+    #multi-color/extended
+    if (mode_multicolor == True or mode_extended == True) :
+        print(', extra background color 1', end='')
+        data.append(value_d022)
+        print(', extra background color 2', end='')
+        data.append(value_d023)
+
+    if (mode_extended == True) :
+        print(', extra background color 3', end='')
+        data.append(value_d024)
+
     print(' writing done.')
 
     _save_some_data(filename,data)

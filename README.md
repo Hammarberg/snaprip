@@ -81,6 +81,35 @@ offset|length|data
 4051|1|border color $d020
 
 
+## Multi-color PETSCII image with custom font
+
+offset|length|data
+---|---|---
+0|2|start address $3000 (high, low)
+2|2048|font
+2050|1000|screen
+3050|1000|colorram $d800
+4050|1|background color $d021
+4051|1|border color $d020
+4052|1|background color $d022
+4053|1|background color $d023
+
+
+## ECM PETSCII image with custom font
+
+offset|length|data
+---|---|---
+0|2|start address $3000 (high, low)
+2|2048|font
+2050|1000|screen
+3050|1000|colorram $d800
+4050|1|background color $d021
+4051|1|border color $d020
+4052|1|background color $d022
+4053|1|background color $d023
+4054|1|background color $d024
+
+
 ## Spriteset
 
 offset|length|data
