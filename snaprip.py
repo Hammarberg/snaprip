@@ -32,8 +32,8 @@ DATUM = '27.02.2022';
 #OFFSET_HEADER = 0x0016          #every header: 16+1+1+4=22 = $16
 OFFSET_CIA = 0x0000
 OFFSET_RAM = 0x0004
-OFFSET_COLRAM = 0x002b
-OFFSET_VIC = 0x045f
+OFFSET_COLRAM = 0x02f9
+OFFSET_VIC = 0x0001
 
 SIZE_C64_MEMORY = 65536
 SIZE_C64_VIC    = 48
@@ -248,9 +248,9 @@ def _check_snapshot_header() :
     global filepos
 
     PRE_MAGIC = 'VICE Snapshot File' #+0x1a
-    PRE_MACHINE = 'C64'
-    PRE_VERSION_MAJOR = 1
-    PRE_VERSION_MINOR = 1
+    PRE_MACHINE = 'C64SC'
+    PRE_VERSION_MAJOR = 2
+    PRE_VERSION_MINOR = 0
     PRE_VICE_VERSION = 'VICE Version'   #+0x1a  VERSION_MAGIC+VERSION+SVNVERSION
     
     #see https://vice-emu.sourceforge.io/vice_9.html#SEC255
